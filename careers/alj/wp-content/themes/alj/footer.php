@@ -16,11 +16,15 @@
 					&copy; 2015 Abdul Latif Jameel IPR Company Limited. Permission to use this site is granted strictly subject to the Terms of Use
 				</div>
 				<nav class="footer-nav">
-					<a href="#">Terms Of Use</a>
-					<a href="#">Copyright Notice And Disclaimer</a>
-					<a href="#">Privacy Policy</a>
-					<a href="#">Cooke Policy</a>
-					<?php //wp_nav_menu( array('menu' => 'footer-menu'));?>
+					<?php
+					$menuArgs = array(
+						'menu'=>'footer-menu',
+						'container' => false,
+						'items_wrap' => '%3$s',
+						'separator' =>'|', //this is a custom arg I've added, not a 'core' one.
+						'walker' => new nolist_walker()
+						);
+						wp_nav_menu($menuArgs);?>
 				</nav>
 				<div class="alj-website-link">
 					<a href="http://www.alj.com" target="_blank">www.alj.com</a>

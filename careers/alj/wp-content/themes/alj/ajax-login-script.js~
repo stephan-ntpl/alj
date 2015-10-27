@@ -27,7 +27,12 @@ jQuery(document).ready(function($) {
                 $('form#login p.status').text(data.message);
                 if (data.loggedin == true){
                 	 $(".login-form").hide();
+                	 $(".forgot-login").hide();
+                	 jQuery(".alj-logout").show();
+                	 $("#login-title").hide();
                 	 $("#logout-url").show();
+                	 $("#menu-title").hide();
+                	 $("#menu-title").innerHTML = "Back";
                   // document.location.href = ajax_login_object.redirecturl;
                 }
             }

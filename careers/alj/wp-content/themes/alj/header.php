@@ -83,6 +83,8 @@
 <script>
     jQuery(document).ready(function(){
     jQuery("#logout-url").hide();
+	jQuery(".alj-logout").hide();
+	document.getElementById("menu-title").innerHTML = "Login";
     });
 </script>
 </head>
@@ -95,18 +97,18 @@
 				<li><a href="#" class="btn-switch" data-section="living"><span>Living in the Middle East<span></a></li>
 				<li><a href="#" class="btn-switch" data-section="about"><span>Who Are Abdul Latif Jameel</span></a></li>
 				<li class="title"><h2>Downloads</h2></li>
-				<li><a href="http://google.com/">Employee Handbook</a></li>
-				<li><a href="http://apple.com/">Corporate Brochure</a></li>
-				<?php if (is_user_logged_in()) { ?>
-						<a class="alj-logout" href="<?php echo wp_logout_url( home_url() ); ?>">Logout</a>
-				<?php } else { ?>
+				<li><a href="<?php bloginfo('template_url'); ?>/download.php?filename=alj-recruitment-development-brief.pdf">Employee Handbook</a></li>
+				<li><a href="<?php bloginfo('template_url'); ?>/download.php?filename=alj.pdf/">Corporate Brochure</a></li>
+				
+				<a class="alj-logout" href="<?php echo wp_logout_url( home_url() ); ?>">Logout</a>
+				<?php if (!is_user_logged_in()) { ?>
 				<li class="login-nav" >
-					<span>Login</span>
+					<span id="menu-title"></span>
 					<ul id="alj-login">
-						<li class="title">
+						<li class="title"  id="login-title">
 							<h2>Login</h2>
 						</li>
-						<li id="logout-url"><a class="alj-logout" href="<?php echo wp_logout_url( home_url() ); ?>">Logout</a></li>
+						<a class="alj-logout" id="logout-url" href="<?php echo wp_logout_url( home_url() ); ?>">Logout</a>
 						<li class="login-form">
 							 <form id="login" action="login" method="post">
 								
@@ -119,7 +121,7 @@
 							</form>
 							
 						</li>
-						<li class="login-nav">
+						<li class="login-nav forgot-login" >
 							<span class="no-style">Forgot Password?</span>
 							<ul>
 								<li class="title">
@@ -138,6 +140,7 @@
 					</ul>
 				</li>
 				<?php } ?>
+				<br/>
 				<li class="main-site">
 					<a href="http://alj.com/">www.alj.com</a>
 				</li>

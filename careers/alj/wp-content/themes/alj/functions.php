@@ -599,6 +599,29 @@ function alj_get_gallery_images() {
 register_nav_menus( array(
 	'footer_menu' => 'footer-menu',
 ) );
+
+class nolist_walker extends Walker_Nav_Menu {
+ function start_el(&$output, $item, $depth, $args) {
+  $classes = empty($item->classes) ? array () : (array) $item->classes;
+  $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item));
+  !empty ($class_names) && $class_names = 'class="'. esc_attr($class_names) . '"';
+  !empty($args->separator) && ($item->menu_order > 1) && $output .= '<span class="menu-sep">'.$args->separator."</span>\n";
+  $output .= "<span id='menu-item-$item->ID' $class_names>";
+  $attributes = '';
+  !empty($item->attr_title) && $attributes .= ' title="' . esc_attr($item->attr_title) .'"';
+  !empty($item->target) && $attributes .= ' target="' . esc_attr($item->target) .'"';
+  !empty($item->xfn) && $attributes .= ' rel="' . esc_attr($item->xfn) .'"';
+  !empty($item->url) && $attributes .= ' href="' . esc_attr($item->url) .'"';
+  $title = apply_filters('the_title', $item->title, $item->ID);
+  $item_output = $args->before."<a$attributes>".$args->link_before.$title.'</a>'.$args->link_after.$args->after;
+  $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
+ }
+ function end_el(&$output, $item, $depth) {
+  $output .= "</span>\n";
+ }
+}
+
+
 function ajax_login_init(){
 
     wp_register_script('ajax-login-script', get_template_directory_uri() . '/ajax-login-script.js', array('jquery') ); 
@@ -606,10 +629,10 @@ function ajax_login_init(){
 
     wp_localize_script( 'ajax-login-script', 'ajax_login_object', array( 
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'redirecturl' => home_url(),
+        //'redirecturl' => home_url(),
         'loadingmessage' => __('Sending user info, please wait...')
     ));
-
+    sleep(2);
     // Enable the user with no privileges to run ajax_login() in AJAX
     add_action( 'wp_ajax_nopriv_ajaxlogin', 'ajax_login' );
 }
@@ -638,4 +661,40 @@ function ajax_login(){
 
     die();
 }
+
+require_once(TEMPLATEPATH.'/include/post_type.php' );
+
+function my_admin_scripts() {    
+    wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    wp_register_script('my-upload2','https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js');
+    wp_register_script('my-upload', TEMPLATEPATH.'/js/my-script.js', array('jquery','media-upload','thickbox'));
+    wp_enqueue_script('my-upload');
+    wp_enqueue_script('my-upload2');
+}
+
+function my_admin_styles() {
+
+    wp_enqueue_style('thickbox');
+}
+ add_action('admin_enqueue_scripts', 'my_admin_scripts');
+ add_action('admin_enqueue_scripts', 'my_admin_styles');
+
 ?>
+<script>jQuery(document).ready( function( $ ) {
+
+    $('#upload_image_button').click(function() {
+alert("test");
+        formfield = $('#upload_image').attr('name');
+        tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
+        return false;
+    });
+
+    window.send_to_editor = function(html) {
+
+        imgurl = $('img',html).attr('src');
+        $('#upload_image').val(imgurl);
+        tb_remove();
+    }
+
+});</script>
