@@ -1,0 +1,15 @@
+.alj-logout{ackground: #636264;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    margin: 15px 0 0 80px;
+    padding: 15px 25px;
+    text-transform: uppercase;
+    transition: all .2s ease;}
+.login-form .status{ margin: 15px 0 0 60px;
+    padding: 15px 25px;
+	 color:#fff!important;    
+    }

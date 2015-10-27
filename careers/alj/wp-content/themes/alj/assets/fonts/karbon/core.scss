@@ -1,0 +1,22 @@
+/* FONT PATH
+ * -------------------------- */
+//$karbon-font-path:        "fonts/karbon";
+@font-face {
+  font-family: "karbon-medium";
+  src: url('Karbon-Medium.otf'),
+      url('KarbonWeb-Medium.woff') format('woff');
+@font-face {
+  font-family: "karbon-regular";
+  src: url('Karbon-Regular.otf'),
+      url('KarbonWeb-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: "karbon-semibold";
+  src: url('Karbon-Semibold.otf'),
+      url('KarbonWeb-Semibold.woff') format('woff');
+}
+@font-face {
+  font-family: "karbon-thin";
+  src: url('Karbon-Thin.otf'),
+      url('KarbonWeb-Thin.woff') format('woff');
+}
