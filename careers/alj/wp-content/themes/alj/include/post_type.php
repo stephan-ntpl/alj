@@ -123,6 +123,7 @@ function testimonial_meta_box_callback( $post ) {
 	wp_nonce_field( 'blog_save_meta_box_data', 'testimonial_meta_box_nonce' );
 	$author = get_post_meta( $post->ID, '_author', true );
 	$link = get_post_meta( $post->ID, '_link', true );
+	$video_url = get_post_meta( $post->ID, '_video_url', true );
    
 	echo '<label for="Blog Date">';
 	_e( 'Author Name:-', 'testimonial_meta_box' );
@@ -134,10 +135,10 @@ function testimonial_meta_box_callback( $post ) {
 	echo '</label> ';
 	echo '<input type="text" id="link" class="link" name="link" value="' . esc_attr( $link ) . '" size="62" />'."<br/><br/>";
 	echo '<label for="Blog Date">';
-	_e( 'Placeholder Image:-', 'testimonial_meta_box' );
+	_e( 'Video URl:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'testimonial_meta_box' );
 	echo '</label> ';
-	echo '<input id="upload_image" type="text" size="36" name="upload_image" value="" />';
-	echo '<input id="upload_image_button" type="button" value="Upload Image" />';
+	echo '<input type="text" id="video_url" class="video_url" name="video_url" value="' . esc_attr( $video_url ) . '" size="62" />'."<br/><br/>";
+	
 }
 
 function blog_save_meta_box_data( $post_id ) {
@@ -172,12 +173,17 @@ function blog_save_meta_box_data( $post_id ) {
 	if ( ! isset( $_POST['link'] ) ) {
 		return;
 	}
+	if ( ! isset( $_POST['video_url'] ) ) {
+		return;
+	}
 	// Sanitize user input.
     $author_field= sanitize_text_field( $_POST['author'] );
 	$Link_field= sanitize_text_field( $_POST['link'] );
+	$video_field= sanitize_text_field( $_POST['video_url'] );
 	// Update the meta field in the database.
     update_post_meta( $post_id, '_author', $author_field);
 	update_post_meta( $post_id, '_link', $Link_field );
+	update_post_meta( $post_id, '_video_url', $video_field );
 
 }
 add_action( 'save_post', 'blog_save_meta_box_data' );

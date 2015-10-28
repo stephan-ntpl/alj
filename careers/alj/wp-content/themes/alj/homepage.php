@@ -4,7 +4,11 @@ Template Name: Homepage
  
  */
 
-get_header(); ?>
+get_header();
+
+
+?>
+
 <div id="section">
 				<section id="section-working" class="active" data-current="working|Working in the Middle East" data-previous="living|Living in the Middle East" data-next="about|Who Are Abdul Latif Jameel">
 					<img src="assets/img/media/2.jpg" alt="" class="top-bg">
@@ -16,36 +20,32 @@ get_header(); ?>
 					<div class="block-2 block-content">
 						<div class="section-slider-container">
 							<div class="section-slider owl-carousel wow fadeIn" id="slider_working" data-wow-delay="1s">
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide1.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide2.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide3.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide1.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="assets/img/media/wslide2.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide3.jpg">
-									<span class="i-bottom"></span>
-								</div>
+								<?php
+								$args = array( 
+									   'post_type' => 'slider', 
+									   'tax_query'=> array(
+											'taxonomy' => 'slider',
+											'terms' => array('Working in the Middle East'),
+											'field' => 'slug',
+										)
+								);
+								$loop = new WP_Query( $args );
+								if( $loop->have_posts() ) {
+												while ($loop->have_posts()) : $loop->the_post();
+												
+												?>
+												<div>
+																<span class="i-top"></span>
+																<?php if ( has_post_thumbnail() ) {the_post_thumbnail('large'); }?>
+																<span class="i-bottom"></span>
+											    </div>
+												<?php
+												endwhile; 
+																					
+								}												
+								wp_reset_query();
+								?>
+								
 							</div>
 							<div class="quote-container">
 								<blockquote class="wow fadeIn" data-wow-delay=".6s">
@@ -58,40 +58,27 @@ get_header(); ?>
 					<div class="block-3 block-content" data-background-color="#c4c5c8" data-text-color="#fff">
 						<div class="block-wrapper">
 							<div class="content">
-								<h2 class="wow fadeInLeft" data-wow-delay="1s" data-wow-duration="2s">Benefits</h2>
-								<p class="wow fadeInLeft" data-wow-delay="1s" data-wow-duration="2s">Working in the Middle East comes with many benefits and perks, tax free salaries,  great weather and the opportunity to travel world wide. At Abdul Latif Jameel we provide jobs that encourage skilled professionals to grow within our company to maximise their career potential. We reward our employees by providing the perfect professiaonl working enviroment.</p>
-								<a href="#" class="wow fadeInLeft" data-wow-delay="1s" data-wow-duration="2s" data-text-color="#fff">Find out more about the working in the region</a>
-								<br>
-								<br>
-								<div class="stats">
-									<div class="stat-block wow fadeIn" data-wow-delay="1s" data-wow-duration="1.5s">
-										<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/dollar-sign.svg" alt="">
-										<h3>Tax Free Salary</h3>
-										<ul>
-											<li>Fic tem. Rem rae et quae.</li>
-											<li>Fic tem. Rem rae et quae.</li>
-											<li>Fic tem.</li>
-										</ul>
-									</div>
-									<div class="stat-block wow fadeIn" data-wow-delay="1s" data-wow-duration="1.5s">
-										<img class="icon-svg icon-stat" src="assets/img/icons/plane.svg" alt="">
-										<h3>Yearly Flights Home</h3>
-										<ul>
-											<li>Fic tem. Rem rae et quae.</li>
-											<li>Fic tem. Rem rae et quae.</li>
-											<li>Fic tem.</li>
-										</ul>
-									</div>
-									<div class="stat-block wow fadeIn" data-wow-delay="1s" data-wow-duration="1.5s">
-										<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/medical.svg" alt="">
-										<h3>Personal Medical Insurance</h3>
-										<ul>
-											<li>Fic tem. Rem rae et quae.</li>
-											<li>Fic tem. Rem rae et quae.</li>
-											<li>Fic tem.</li>
-										</ul>
-									</div>
-								</div>
+									<?php
+												$args = array( 
+													   'post_type' => 'post', 
+													   'tax_query'=> array(
+															'taxonomy' => 'post-category',
+															'terms' => array('Working in the Middle East'),
+															'field' => 'slug',
+														)
+												);
+												$loop = new WP_Query( $args );
+												if( $loop->have_posts() ) {
+																while ($loop->have_posts()) : $loop->the_post();
+																?>
+																<h2 class="wow fadeInLeft" data-wow-delay="1s" data-wow-duration="2s"><?php echo the_title();?></h2>
+																<?php
+																echo the_content();
+																endwhile; 
+																									
+												}												
+												wp_reset_query();
+												?>
 							</div>
 							<div class="img wow fadeInRight" data-wow-delay="1s" data-wow-duration="2s">
 								<img src="<?php bloginfo('template_url'); ?>/assets/img/media/chairs.jpg" alt="">
@@ -102,41 +89,65 @@ get_header(); ?>
 						<div class="block-wrapper" data-wow-delay="1s">
 							<div class="content">
 							<div class="testimonials owl-carousel">
-								<div class="testimonial">
-									<div class="testimonial-content wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-										<div class="inner">
-											<div class="name">Ibrahim Radwan</div>
-											<div class="desc">describes his own experience working for our team in Riyadh</div>
-											<a href="https://vimeo.com/103004691" class="button button-video">
-												<i class="alj-play"></i>
-												<span>
-													Watch Ibrahim Discuss Working Life In The Middle East
-												</span>
-											</a>
-										</div>
-									</div>
-									<div class="testimonial-img wow fadeInRight" data-wow-duration="1s" data-wow-delay="1s">
-										<img src="<?php bloginfo('template_url'); ?>/assets/img/media/testimonial.jpg" alt="">
-									</div>
-								</div>
-								<div class="testimonial">
-									<div class="testimonial-content">
-										<div class="inner">
-											<div class="name">Lionel Johnson</div>
-											<div class="desc">describes his own experience working for our team in Dubai</div>
-											<a href="https://vimeo.com/103004691" class="button button-video">
-												<i class="alj-play"></i>
-												<span>
-													Watch Lionel Discuss Working Life
-													In The Middle East
-												</span>
-											</a>
-										</div>
-									</div>
-									<div class="testimonial-img">
-										<img src="<?php bloginfo('template_url'); ?>/assets/img/media/testimonial.jpg" alt="">
-									</div>
-								</div>
+									  <?php
+										global $wpdb,$post; 
+										$mtype = 'testimonial';
+									
+										$memberArgs=array(
+												'post_type' => $mtype,
+												'post_status' => 'publish',
+												
+													
+										);
+																			$my_query = null;
+										
+										$memberLoop = new WP_Query($memberArgs);
+										if( $memberLoop->have_posts() ) {
+								        $i=1;
+										while ($memberLoop->have_posts()) : $memberLoop->the_post();
+										?>
+										<div class="testimonial">
+								            <?php if($i==1){?>
+											<div class="testimonial-content wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+											<?php }
+											else {
+												?>
+								            <div class="testimonial-content">
+								            <?php
+											}
+											?>
+												<div class="inner">
+																<div class="name"><?php echo get_post_meta(get_the_ID(), '_author', TRUE) ?></div>
+																<div class="desc"><?php echo substr(get_the_excerpt(),0,200) ?></div>
+																<a href="<?php echo get_post_meta(get_the_ID(), '_video_url', TRUE) ?>" class="button button-video">
+																<i class="alj-play"></i>
+																<span>
+																<?php echo get_post_meta(get_the_ID(), '_link', TRUE) ?>
+																</span>
+																</a>
+												</div>
+											</div>
+											<?php if($i==1){?>
+											<div class="testimonial-img wow fadeInRight" data-wow-duration="1s" data-wow-delay="1s">
+											<?php }
+											else { ?>
+											<div class="testimonial-img">
+											<?php } ?>
+											
+												<?php if ( has_post_thumbnail() ) {the_post_thumbnail('large'); }?>
+											</div>
+								         </div>
+												<?php
+												$i++;
+												endwhile; 
+													
+													wp_reset_query(); 
+												}else{
+												   echo "No Testimonial Listed";
+												}
+											
+											?>
+								
 							</div>
 						</div>
 						</div>
@@ -264,36 +275,32 @@ get_header(); ?>
 					<div class="block-2 block-content">
 						<div class="section-slider-container wow fadeInUpBig" data-wow-delay=".4s">
 							<div class="section-slider owl-carousel" id="slider_living">
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide1.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide2.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide3.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide1.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide2.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide3.jpg">
-									<span class="i-bottom"></span>
-								</div>
+								<?php
+								$args = array( 
+									   'post_type' => 'slider', 
+									   'tax_query'=> array(
+											'taxonomy' => 'slider',
+											'terms' => array('Living in the Middle East'),
+											'field' => 'slug',
+										)
+								);
+								$loop = new WP_Query( $args );
+								if( $loop->have_posts() ) {
+												while ($loop->have_posts()) : $loop->the_post();
+												
+												?>
+												<div>
+																<span class="i-top"></span>
+																<?php if ( has_post_thumbnail() ) {the_post_thumbnail('large'); }?>
+																<span class="i-bottom"></span>
+											    </div>
+												<?php
+												endwhile; 
+																					
+								}												
+								wp_reset_query();
+								?>
+							
 							</div>
 							<div class="quote-container">
 								<blockquote>
@@ -305,37 +312,27 @@ get_header(); ?>
 					</div>
 					<div class="block-3 block-content" data-background-color="#558598" data-text-color="#fff">
 						<div class="content wow fadeInLeft" data-wow-delay=".4s">
-							<h2>Benefits</h2>
-							<p>Working in the Middle East comes with many benefits and perks, tax free salaries,  great weather and the opportunity to travel world wide. At Abdul Latif Jameel we provide jobs that encourage skilled professionals to grow within our company to maximise their career potential. We reward our employees by providing the perfect professiaonl working enviroment.</p>
-							<div class="stats">
-								<div class="stat-block">
-									<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/dollar-sign.svg" alt="">
-									<h3>Tax Free Salary</h3>
-									<ul>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem.</li>
-									</ul>
-								</div>
-								<div class="stat-block">
-									<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/plane.svg" alt="">
-									<h3>Yearly Flights Home</h3>
-									<ul>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem.</li>
-									</ul>
-								</div>
-								<div class="stat-block">
-									<img class="icon-svg icon-stat" src="assets/img/icons/medical.svg" alt="">
-									<h3>Personal Medical Insurance</h3>
-									<ul>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem.</li>
-									</ul>
-								</div>
-							</div>
+								<?php
+												$args = array( 
+													   'post_type' => 'post', 
+													   'tax_query'=> array(
+															'taxonomy' => 'post-category',
+															'terms' => array('Working in the Middle East'),
+															'field' => 'slug',
+														)
+												);
+												$loop = new WP_Query( $args );
+												if( $loop->have_posts() ) {
+																while ($loop->have_posts()) : $loop->the_post();
+																?>
+																<h2 class="wow fadeInLeft" data-wow-delay="1s" data-wow-duration="2s"><?php echo the_title();?></h2>
+																<?php
+																echo the_content();
+																endwhile; 
+																									
+												}												
+												wp_reset_query();
+												?>
 						</div>
 						<div class="img parallax image-background wow fadeInRight" data-wow-delay=".4s">
 							<img src="assets/img/media/chairs.jpg" alt="">
@@ -344,42 +341,63 @@ get_header(); ?>
 					<div class="block-4 block-content" data-background-color="#558598" data-text-color="#fff">
 						<div class="content">
 							<div class="testimonials owl-carousel">
-								<div class="testimonial">
-									<div class="testimonial-content wow fadeInLeft">
-										<div class="inner">
-											<div class="name">Ibrahim Radwan</div>
-											<div class="desc">describes his own experience working for our team in Riyadh</div>
-											<a href="https://vimeo.com/103004691" class="button button-video">
-												<i class="alj-play"></i>
-												<span>
-													Watch Ibrahim Discuss Working Life
-													In The Middle East
-												</span>
-											</a>
-										</div>
-									</div>
-									<div class="testimonial-img wow fadeInRight">
-										<img src="<?php bloginfo('template_url'); ?>/assets/img/media/testimonial.jpg" alt="">
-									</div>
-								</div>
-								<div class="testimonial">
-									<div class="testimonial-content">
-										<div class="inner">
-											<div class="name">Lionel Johnson</div>
-											<div class="desc">describes his own experience working for our team in Dubai</div>
-											<a href="https://vimeo.com/103004691" class="button button-video">
-												<i class="alj-play"></i>
-												<span>
-													Watch Lionel Discuss Working Life
-													In The Middle East
-												</span>
-											</a>
-										</div>
-									</div>
-									<div class="testimonial-img">
-										<img src="<?php bloginfo('template_url'); ?>/assets/img/media/testimonial.jpg" alt="">
-									</div>
-								</div>
+								  <?php
+										global $wpdb,$post; 
+										$mtype = 'testimonial';
+										$memberArgs=array(
+												'post_type' => $mtype,
+												'post_status' => 'publish',
+												'cat'=>'Working in the Middle East',
+													
+										);
+										$my_query = null;
+										$memberLoop = new WP_Query($memberArgs);
+										if( $memberLoop->have_posts() ) {
+								        $i=1;
+										while ($memberLoop->have_posts()) : $memberLoop->the_post();
+										?>
+										<div class="testimonial">
+								            <?php if($i==1){?>
+											<div class="testimonial-content wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+											<?php }
+											else {
+												?>
+								            <div class="testimonial-content">
+								            <?php
+											}
+											?>
+												<div class="inner">
+																<div class="name"><?php echo get_post_meta(get_the_ID(), '_author', TRUE) ?></div>
+																<div class="desc"><?php echo substr(get_the_excerpt(),0,200) ?></div>
+																<a href="<?php echo get_post_meta(get_the_ID(), '_video_url', TRUE) ?>" class="button button-video">
+																<i class="alj-play"></i>
+																<span>
+																<?php echo get_post_meta(get_the_ID(), '_link', TRUE) ?>
+																</span>
+																</a>
+												</div>
+											</div>
+											<?php if($i==1){?>
+											<div class="testimonial-img wow fadeInRight" data-wow-duration="1s" data-wow-delay="1s">
+											<?php }
+											else { ?>
+											<div class="testimonial-img">
+											<?php } ?>
+											
+												<?php if ( has_post_thumbnail() ) {the_post_thumbnail('large'); }?>
+											</div>
+								         </div>
+												<?php
+												$i++;
+												endwhile; 
+													
+													wp_reset_query(); 
+												}else{
+												   echo "No Testimonial Listed";
+												}
+											
+											?>
+							
 							</div>
 						</div>
 					</div>
@@ -487,36 +505,32 @@ get_header(); ?>
 					<div class="block-2 block-content">
 						<div class="section-slider-container wow fadeInUpBig" data-wow-delay=".4s">
 							<div class="section-slider owl-carousel" id="slider_living">
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide1.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide2.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide3.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide1.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="assets/img/media/wslide2.jpg">
-									<span class="i-bottom"></span>
-								</div>
-								<div>
-									<span class="i-top"></span>
-									<img src="<?php bloginfo('template_url'); ?>/assets/img/media/wslide3.jpg">
-									<span class="i-bottom"></span>
-								</div>
+								<?php
+								$args = array( 
+									   'post_type' => 'slider', 
+									   'tax_query'=> array(
+											'taxonomy' => 'slider',
+											'terms' => array('Who Are Abdul Latif Jameel'),
+											'field' => 'slug',
+										)
+								);
+								$loop = new WP_Query( $args );
+								if( $loop->have_posts() ) {
+												while ($loop->have_posts()) : $loop->the_post();
+												
+												?>
+												<div>
+																<span class="i-top"></span>
+																<?php if ( has_post_thumbnail() ) {the_post_thumbnail('large'); }?>
+																<span class="i-bottom"></span>
+											    </div>
+												<?php
+												endwhile; 
+																					
+								}												
+								wp_reset_query();
+								?>
+								
 							</div>
 							<div class="quote-container">
 								<blockquote>
@@ -528,37 +542,27 @@ get_header(); ?>
 					</div>
 					<div class="block-3 block-content" data-background-color="#96B5AD" data-text-color="#fff">
 						<div class="content wow fadeInLeft" data-wow-delay=".4s">
-							<h2>Who We Are</h2>
-							<p>Working in the Middle East comes with many benefits and perks, tax free salaries,  great weather and the opportunity to travel world wide. At Abdul Latif Jameel we provide jobs that encourage skilled professionals to grow within our company to maximise their career potential. We reward our employees by providing the perfect professiaonl working enviroment.</p>
-							<div class="stats">
-								<div class="stat-block">
-									<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/dollar-sign.svg" alt="">
-									<h3>Tax Free Salary</h3>
-									<ul>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem.</li>
-									</ul>
-								</div>
-								<div class="stat-block">
-									<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/plane.svg" alt="">
-									<h3>Yearly Flights Home</h3>
-									<ul>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem.</li>
-									</ul>
-								</div>
-								<div class="stat-block">
-									<img class="icon-svg icon-stat" src="<?php bloginfo('template_url'); ?>/assets/img/icons/medical.svg" alt="">
-									<h3>Personal Medical Insurance</h3>
-									<ul>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem. Rem rae et quae.</li>
-										<li>Fic tem.</li>
-									</ul>
-								</div>
-							</div>
+								<?php
+												$args = array( 
+													   'post_type' => 'post', 
+													   'tax_query'=> array(
+															'taxonomy' => 'post-category',
+															'terms' => array('Working in the Middle East'),
+															'field' => 'slug',
+														)
+												);
+												$loop = new WP_Query( $args );
+												if( $loop->have_posts() ) {
+																while ($loop->have_posts()) : $loop->the_post();
+																?>
+																<h2 class="wow fadeInLeft" data-wow-delay="1s" data-wow-duration="2s"><?php echo the_title();?></h2>
+																<?php
+																echo the_content();
+																endwhile; 
+																									
+												}												
+												wp_reset_query();
+								?>
 						</div>
 						<div class="img parallax image-background wow fadeInRight" data-wow-delay=".4s">
 							<img src="<?php bloginfo('template_url'); ?>/assets/img/media/chairs.jpg" alt="">
@@ -567,42 +571,62 @@ get_header(); ?>
 					<div class="block-4 block-content" data-background-color="#96B5AD" data-text-color="#fff">
 						<div class="content">
 							<div class="testimonials owl-carousel">
-								<div class="testimonial">
-									<div class="testimonial-content">
-										<div class="inner">
-											<div class="name">Ibrahim Radwan</div>
-											<div class="desc">describes his own experience working for our team in Riyadh</div>
-											<a href="https://vimeo.com/103004691" class="button button-video">
-												<i class="alj-play"></i>
-												<span>
-													Watch Ibrahim Discuss Working Life
-													In The Middle East
-												</span>
-											</a>
-										</div>
-									</div>
-									<div class="testimonial-img">
-										<img src="<?php bloginfo('template_url'); ?>/assets/img/media/testimonial.jpg" alt="">
-									</div>
-								</div>
-								<div class="testimonial">
-									<div class="testimonial-content">
-										<div class="inner">
-											<div class="name">Lionel Johnson</div>
-											<div class="desc">describes his own experience working for our team in Dubai</div>
-											<a href="https://vimeo.com/103004691" class="button button-video">
-												<i class="alj-play"></i>
-												<span>
-													Watch Lionel Discuss Working Life
-													In The Middle East
-												</span>
-											</a>
-										</div>
-									</div>
-									<div class="testimonial-img">
-										<img src="<?php bloginfo('template_url'); ?>/assets/img/media/testimonial.jpg" alt="">
-									</div>
-								</div>
+								  <?php
+										global $wpdb,$post; 
+										$mtype = 'testimonial';
+										$memberArgs=array(
+												'post_type' => $mtype,
+												'post_status' => 'publish',
+												'cat'=>'Working in the Middle East',
+													
+										);
+										$my_query = null;
+										$memberLoop = new WP_Query($memberArgs);
+										if( $memberLoop->have_posts() ) {
+								        $i=1;
+										while ($memberLoop->have_posts()) : $memberLoop->the_post();
+										?>
+										<div class="testimonial">
+								            <?php if($i==1){?>
+											<div class="testimonial-content wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+											<?php }
+											else {
+												?>
+								            <div class="testimonial-content">
+								            <?php
+											}
+											?>
+												<div class="inner">
+																<div class="name"><?php echo get_post_meta(get_the_ID(), '_author', TRUE) ?></div>
+																<div class="desc"><?php echo substr(get_the_excerpt(),0,200) ?></div>
+																<a href="<?php echo get_post_meta(get_the_ID(), '_video_url', TRUE) ?>" class="button button-video">
+																<i class="alj-play"></i>
+																<span>
+																<?php echo get_post_meta(get_the_ID(), '_link', TRUE) ?>
+																</span>
+																</a>
+												</div>
+											</div>
+											<?php if($i==1){?>
+											<div class="testimonial-img wow fadeInRight" data-wow-duration="1s" data-wow-delay="1s">
+											<?php }
+											else { ?>
+											<div class="testimonial-img">
+											<?php } ?>
+											
+												<?php if ( has_post_thumbnail() ) {the_post_thumbnail('large'); }?>
+											</div>
+								         </div>
+												<?php
+												$i++;
+												endwhile; 
+													
+													wp_reset_query(); 
+												}else{
+												   echo "No Testimonial Listed";
+												}
+											
+											?>
 							</div>
 						</div>
 					</div>

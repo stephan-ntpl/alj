@@ -663,38 +663,5 @@ function ajax_login(){
 }
 
 require_once(TEMPLATEPATH.'/include/post_type.php' );
+require_once(TEMPLATEPATH.'/include/slider_post_type.php' );
 
-function my_admin_scripts() {    
-    wp_enqueue_script('media-upload');
-    wp_enqueue_script('thickbox');
-    wp_register_script('my-upload2','https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js');
-    wp_register_script('my-upload', TEMPLATEPATH.'/js/my-script.js', array('jquery','media-upload','thickbox'));
-    wp_enqueue_script('my-upload');
-    wp_enqueue_script('my-upload2');
-}
-
-function my_admin_styles() {
-
-    wp_enqueue_style('thickbox');
-}
- add_action('admin_enqueue_scripts', 'my_admin_scripts');
- add_action('admin_enqueue_scripts', 'my_admin_styles');
-
-?>
-<script>jQuery(document).ready( function( $ ) {
-
-    $('#upload_image_button').click(function() {
-alert("test");
-        formfield = $('#upload_image').attr('name');
-        tb_show( '', 'media-upload.php?type=image&amp;TB_iframe=true' );
-        return false;
-    });
-
-    window.send_to_editor = function(html) {
-
-        imgurl = $('img',html).attr('src');
-        $('#upload_image').val(imgurl);
-        tb_remove();
-    }
-
-});</script>
