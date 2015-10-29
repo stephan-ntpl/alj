@@ -10,7 +10,7 @@
  * @since Twenty Ten 1.0
  */
 ?>
-<footer class="site-footer">
+<footer class="site-footer" style="z-index:75 !important">
 			<div class="footer-content">
 				<div class="copyright">
 					&copy; 2015 Abdul Latif Jameel IPR Company Limited. Permission to use this site is granted strictly subject to the Terms of Use
@@ -21,7 +21,6 @@
 						'menu'=>'footer-menu',
 						'container' => false,
 						'items_wrap' => '%3$s',
-						'separator' =>'|', //this is a custom arg I've added, not a 'core' one.
 						'walker' => new nolist_walker()
 						);
 						wp_nav_menu($menuArgs);?>
